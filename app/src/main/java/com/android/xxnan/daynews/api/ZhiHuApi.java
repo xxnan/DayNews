@@ -17,7 +17,7 @@ public interface ZhiHuApi {
      * @GET("/api/4/news/{id}")
      */
     @GET("/api/4/news/latest")
-    ZhiHuDays getZhiHuDays();
+    Observable<ZhiHuDays> getZhiHuDays();
 
     @GET("/api/4/news/before/{date}")
     Observable<ZhiHuDays> getDateDays(@Path("date") String date);

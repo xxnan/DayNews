@@ -2,7 +2,6 @@ package com.android.xxnan.daynews.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +11,8 @@ import android.widget.TextView;
 
 import com.android.xxnan.daynews.R;
 import com.android.xxnan.daynews.bean.zhihu.ZhiHuDaysItem;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import com.android.xxnan.daynews.utils.OkManagerUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -33,6 +27,8 @@ public class ZhiHuRecycleAdapter extends RecyclerView.Adapter<MyHolder> {
         mZhiHuDaysItems = zhiHuDaysItems;
     }
 
+
+
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyHolder(LayoutInflater.from(mContext).inflate(R.layout.zhihu_recycle_item, null));
@@ -40,31 +36,16 @@ public class ZhiHuRecycleAdapter extends RecyclerView.Adapter<MyHolder> {
 
     @Override
     public void onBindViewHolder(final MyHolder holder, int position) {
-        Bitmap bitmap = null;
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(mZhiHuDaysItems.get(position).getImages()[0])
-                .build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
 
-            }
-
+        OkManagerUtil.getInstance().loadBitmap(mZhiHuDaysItems.get(position).getImages()[0], new OkManagerUtil.IBitmapBack() {
             @Override
-            public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful())
-                {
-                    byte[] data=response.body().bytes();
-                    final Bitmap bitmap= BitmapFactory.decodeByteArray(data,0,data.length);
-                    holder.imageView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            holder.imageView.setImageBitmap(bitmap);
-                        }
-                    });
-                }
+            public void bitmapBack(final Bitmap bitmap) {
+                holder.imageView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        holder.imageView.setImageBitmap(bitmap);
+                    }
+                });
             }
         });
         holder.title.setText(mZhiHuDaysItems.get(position).getTitle());

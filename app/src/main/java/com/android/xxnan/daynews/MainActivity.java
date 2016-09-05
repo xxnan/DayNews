@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
         ButterKnife.inject(this);
         mZhiHuDaysItems=new ArrayList<>();
         initView();
+        implZhiHuPersenter=new ImplZhiHuPersenter(MainActivity.this,this);
+        implZhiHuPersenter.getLastZhihuNews();
     }
 
     private void initView() {
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
         progressDialog.setMessage("正在加载...");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        zhihuAdapter=new ZhiHuRecycleAdapter(mZhiHuDaysItems);
+        zhihuAdapter=new ZhiHuRecycleAdapter(MainActivity.this,mZhiHuDaysItems);
         recyclerView.setAdapter(zhihuAdapter);
     }
 
