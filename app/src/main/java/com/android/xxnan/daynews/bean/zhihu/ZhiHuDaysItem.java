@@ -1,16 +1,18 @@
 package com.android.xxnan.daynews.bean.zhihu;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by xxnan on 2016/9/5.
  */
 public class ZhiHuDaysItem {
-//    @SerializedName("images")
+    @SerializedName("images")
     private String[] images;
-//    @SerializedName("type")
+    @SerializedName("type")
     private int type;
-//    @SerializedName("id")
+    @SerializedName("id")
     private String id;
-//    @SerializedName("title")
+    @SerializedName("title")
     private String title;
     private String date;
     public boolean hasFadedIn = false;
