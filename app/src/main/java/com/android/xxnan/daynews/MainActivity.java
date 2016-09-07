@@ -15,8 +15,8 @@ import android.widget.RelativeLayout;
 
 import com.android.xxnan.daynews.IActivity.IZhiHuActivity;
 import com.android.xxnan.daynews.adapter.ZhiHuRecycleAdapter;
-import com.android.xxnan.daynews.bean.zhihu.ZhiHuDays;
-import com.android.xxnan.daynews.bean.zhihu.ZhiHuDaysItem;
+import com.android.xxnan.daynews.bean.zhihu.ZhiHuBean;
+import com.android.xxnan.daynews.bean.zhihu.ZhiHuStories;
 import com.android.xxnan.daynews.implpersenter.ImplZhiHuPersenter;
 
 import java.util.ArrayList;
@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
     private ImplZhiHuPersenter implZhiHuPersenter;
     private ProgressDialog progressDialog;
     private Snackbar snackbar;
-    private ZhiHuDays zhiHuDays;
-    private ArrayList<ZhiHuDaysItem> mZhiHuDaysItems;
+    private ZhiHuBean zhiHuBean;
     private ZhiHuRecycleAdapter zhihuAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
         ButterKnife.inject(this);
-        mZhiHuDaysItems=new ArrayList<>();
         initView();
         implZhiHuPersenter=new ImplZhiHuPersenter(MainActivity.this,this);
         implZhiHuPersenter.getLastZhihuNews();
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
         progressDialog.setMessage("正在加载...");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        zhihuAdapter=new ZhiHuRecycleAdapter(MainActivity.this,mZhiHuDaysItems);
+        zhihuAdapter=new ZhiHuRecycleAdapter(MainActivity.this, (ArrayList<ZhiHuStories>) zhiHuBean.getStories());
         recyclerView.setAdapter(zhihuAdapter);
     }
 
@@ -84,9 +82,8 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
     }
 
     @Override
-    public void updateList(ZhiHuDays zhiHuDays) {
-        this.zhiHuDays=zhiHuDays;
-        mZhiHuDaysItems=zhiHuDays.getmZhiHuDaysItem();
+    public void updateList(ZhiHuBean bean) {
+        zhiHuBean=bean;
         zhihuAdapter.notifyDataSetChanged();
     }
 

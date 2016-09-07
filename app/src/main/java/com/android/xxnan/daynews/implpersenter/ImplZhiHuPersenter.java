@@ -48,10 +48,9 @@ public class ImplZhiHuPersenter extends BasePersenter implements IZhiHuPersenter
             @Override
             public void dataBack(String data) {
                 String dataString =data;
-
                 Gson gson=new Gson();
                 ZhiHuBean bean=gson.fromJson(dataString, ZhiHuBean.class);
-                System.out.print(bean);
+                iZhiHuActivity.updateList(bean);
             }
         });
     }
