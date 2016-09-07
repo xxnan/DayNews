@@ -4,14 +4,14 @@ package com.android.xxnan.daynews.bean.zhihu;
  * Created by xxnan on 2016/9/7.
  */
 public class ZhiHuStories {
-    String [] names;
+    String [] images;
     String type;
     String title;
     String id;
     String ga_prefix;
 
-    public String[] getNames() {
-        return names;
+    public String[] getImages() {
+        return images;
     }
 
     public String getType() {
@@ -30,8 +30,8 @@ public class ZhiHuStories {
         return ga_prefix;
     }
 
-    public void setNames(String[] names) {
-        this.names = names;
+    public void setImages(String[] names) {
+        this.images = names;
     }
 
     public void setType(String type) {

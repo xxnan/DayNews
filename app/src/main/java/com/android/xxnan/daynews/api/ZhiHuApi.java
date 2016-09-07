@@ -1,7 +1,5 @@
 package com.android.xxnan.daynews.api;
 
-import com.android.xxnan.daynews.bean.zhihu.ZhiHuDays;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -28,5 +26,5 @@ public interface ZhiHuApi {
     Call<String> getZhiHuDays();
 
     @GET("/api/4/news/before/{date}")
-    ZhiHuDays getDateDays(@Path("date") String date);
+    Call<String> getDateDays(@Path("date") String date);
 }

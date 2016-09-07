@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.xxnan.daynews.R;
-import com.android.xxnan.daynews.bean.zhihu.ZhiHuDaysItem;
+import com.android.xxnan.daynews.bean.zhihu.ZhiHuStories;
 import com.android.xxnan.daynews.utils.OkManagerUtil;
 
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ import java.util.ArrayList;
  * Created by xxnan on 2016/9/5.
  */
 public class ZhiHuRecycleAdapter extends RecyclerView.Adapter<MyHolder> {
-    private ArrayList<ZhiHuDaysItem> mZhiHuDaysItems;
+    private ArrayList<ZhiHuStories> mZhiHuStories;
     private Context mContext;
 
-    public ZhiHuRecycleAdapter(Context context, ArrayList<ZhiHuDaysItem> zhiHuDaysItems) {
+    public ZhiHuRecycleAdapter(Context context, ArrayList<ZhiHuStories> zhiHuStories) {
         mContext = context;
-        mZhiHuDaysItems = zhiHuDaysItems;
+        mZhiHuStories = zhiHuStories;
     }
 
 
@@ -37,7 +37,7 @@ public class ZhiHuRecycleAdapter extends RecyclerView.Adapter<MyHolder> {
     @Override
     public void onBindViewHolder(final MyHolder holder, int position) {
 
-        OkManagerUtil.getInstance().loadBitmap(mZhiHuDaysItems.get(position).getImages()[0], new OkManagerUtil.IBitmapBack() {
+        OkManagerUtil.getInstance().loadBitmap(mZhiHuStories.get(position).getImages()[0], new OkManagerUtil.IBitmapBack() {
             @Override
             public void bitmapBack(final Bitmap bitmap) {
                 holder.imageView.post(new Runnable() {
@@ -48,12 +48,12 @@ public class ZhiHuRecycleAdapter extends RecyclerView.Adapter<MyHolder> {
                 });
             }
         });
-        holder.title.setText(mZhiHuDaysItems.get(position).getTitle());
+        holder.title.setText(mZhiHuStories.get(position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return mZhiHuDaysItems.size();
+        return mZhiHuStories.size();
     }
 }
 

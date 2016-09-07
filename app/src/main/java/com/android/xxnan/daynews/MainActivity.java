@@ -20,6 +20,7 @@ import com.android.xxnan.daynews.bean.zhihu.ZhiHuStories;
 import com.android.xxnan.daynews.implpersenter.ImplZhiHuPersenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
     private ProgressDialog progressDialog;
     private Snackbar snackbar;
     private ZhiHuBean zhiHuBean;
+    List<ZhiHuStories> stories;
     private ZhiHuRecycleAdapter zhihuAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
         progressDialog.setMessage("正在加载...");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        zhihuAdapter=new ZhiHuRecycleAdapter(MainActivity.this, (ArrayList<ZhiHuStories>) zhiHuBean.getStories());
+        zhiHuBean=new ZhiHuBean();
+        stories=new ArrayList<ZhiHuStories>();
+        zhihuAdapter=new ZhiHuRecycleAdapter(MainActivity.this, (ArrayList<ZhiHuStories>) stories);
         recyclerView.setAdapter(zhihuAdapter);
     }
 
@@ -84,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
     @Override
     public void updateList(ZhiHuBean bean) {
         zhiHuBean=bean;
+        stories=zhiHuBean.getStories();
         zhihuAdapter.notifyDataSetChanged();
     }
 
