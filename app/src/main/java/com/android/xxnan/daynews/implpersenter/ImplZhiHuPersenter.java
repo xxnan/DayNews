@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 public class ImplZhiHuPersenter extends BasePersenter implements IZhiHuPersenter {
     private IZhiHuActivity iZhiHuActivity;
     private Context context;
-
     public ImplZhiHuPersenter(Context mContext, IZhiHuActivity mIZhiHuActivity) {
         context = mContext;
         iZhiHuActivity = mIZhiHuActivity;
@@ -43,14 +42,20 @@ public class ImplZhiHuPersenter extends BasePersenter implements IZhiHuPersenter
 
             }
         });*/
-        String zhihupath="http://news-at.zhihu.com/api/4/news/latest";
+        String zhihupath = "http://news-at.zhihu.com/api/4/news/latest";
         OkManagerUtil.getInstance().loaddata(zhihupath, new OkManagerUtil.IDataBack() {
             @Override
-            public void dataBack(String data) {
-                String dataString =data;
-                Gson gson=new Gson();
-                ZhiHuBean bean=gson.fromJson(dataString, ZhiHuBean.class);
+            public void dataBack(final String data) {
+               /* handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });*/
+                Gson gson = new Gson();
+                ZhiHuBean bean = gson.fromJson(data, ZhiHuBean.class);
                 iZhiHuActivity.updateList(bean);
+                iZhiHuActivity.hideProgressDialog();
             }
         });
     }
