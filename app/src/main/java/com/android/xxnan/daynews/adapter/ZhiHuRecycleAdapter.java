@@ -49,6 +49,12 @@ public class ZhiHuRecycleAdapter extends RecyclerView.Adapter<MyHolder> {
             }
         });
         holder.title.setText(mZhiHuStories.get(position).getTitle());
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
