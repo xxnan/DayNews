@@ -49,7 +49,10 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
             super.handleMessage(msg);
             if(msg.arg1==0x110)
             {
-                zhihuAdapter.notifyDataSetChanged();
+                zhiHuBean= (ZhiHuBean) msg.obj;
+                stories=zhiHuBean.getStories();
+                zhihuAdapter=new ZhiHuRecycleAdapter(MainActivity.this, (ArrayList<ZhiHuStories>) stories);
+                recyclerView.setAdapter(zhihuAdapter);
             }
         }
     };
@@ -72,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         zhiHuBean=new ZhiHuBean();
         stories=new ArrayList<ZhiHuStories>();
-        zhihuAdapter=new ZhiHuRecycleAdapter(MainActivity.this, (ArrayList<ZhiHuStories>) stories);
-        recyclerView.setAdapter(zhihuAdapter);
+//        zhihuAdapter=new ZhiHuRecycleAdapter(MainActivity.this, (ArrayList<ZhiHuStories>) stories);
+//        recyclerView.setAdapter(zhihuAdapter);
     }
 
     @Override
@@ -100,10 +103,9 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
 
     @Override
     public void updateList(final ZhiHuBean bean) {
-        zhiHuBean= bean;
-        stories=zhiHuBean.getStories();
         Message msg=handler.obtainMessage();
         msg.arg1=0x110;
+        msg.obj=bean;
         handler.sendMessage(msg);
 
     }

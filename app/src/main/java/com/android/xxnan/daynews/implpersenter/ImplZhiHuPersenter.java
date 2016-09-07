@@ -46,12 +46,6 @@ public class ImplZhiHuPersenter extends BasePersenter implements IZhiHuPersenter
         OkManagerUtil.getInstance().loaddata(zhihupath, new OkManagerUtil.IDataBack() {
             @Override
             public void dataBack(final String data) {
-               /* handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });*/
                 Gson gson = new Gson();
                 ZhiHuBean bean = gson.fromJson(data, ZhiHuBean.class);
                 iZhiHuActivity.updateList(bean);
