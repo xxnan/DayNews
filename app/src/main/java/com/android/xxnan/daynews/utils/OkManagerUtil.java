@@ -31,6 +31,10 @@ public class OkManagerUtil {
         return instance;
     }
 
+    public OkHttpClient getOkHttpClient()
+    {
+        return okHttpClient;
+    }
     private OkManagerUtil() {
         if (okHttpClient == null)
             okHttpClient = new OkHttpClient();
@@ -59,6 +63,30 @@ public class OkManagerUtil {
         });
     }
 
+    public void loaddata(String path, final IDataBack iDataBack) {
+
+        Request request = new Request.Builder()
+                .url(path)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String data=response.body().string();
+                    iDataBack.dataBack(data);
+                }
+            }
+        });
+    }
+    public interface IDataBack {
+        void dataBack(String data);
+    }
     public interface IBitmapBack {
         void bitmapBack(Bitmap bitmap);
     }

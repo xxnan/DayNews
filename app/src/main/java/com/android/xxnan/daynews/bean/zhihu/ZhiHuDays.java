@@ -1,18 +1,16 @@
 package com.android.xxnan.daynews.bean.zhihu;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 
 /**
  * Created by xxnan on 2016/9/5.
  */
 public class ZhiHuDays {
-    @SerializedName("date")
+//    @SerializedName("date")
     private String date;
-    @SerializedName("top_stories")
+//    @SerializedName("top_stories")
     private ArrayList<ZhiHuDaysItem> mZhiHuDaysItem;
-    @SerializedName("stories")
+//    @SerializedName("stories")
     private ArrayList<ZhiHuDaysItem> stories;
 
     public String getDate() {
