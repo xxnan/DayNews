@@ -3,6 +3,7 @@ package com.android.xxnan.daynews;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +42,17 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
     private ZhiHuBean zhiHuBean;
     List<ZhiHuStories> stories;
     private ZhiHuRecycleAdapter zhihuAdapter;
-    private Handler handler = new Handler();
+    private Handler handler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.arg1==0x110)
+            {
+                zhihuAdapter.notifyDataSetChanged();
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,14 +100,12 @@ public class MainActivity extends AppCompatActivity implements IZhiHuActivity {
 
     @Override
     public void updateList(final ZhiHuBean bean) {
-    handler.post(new Runnable() {
-        @Override
-        public void run() {
-        zhiHuBean=bean;
+        zhiHuBean= bean;
         stories=zhiHuBean.getStories();
-        zhihuAdapter.notifyDataSetChanged();
-        }
-    });
+        Message msg=handler.obtainMessage();
+        msg.arg1=0x110;
+        handler.sendMessage(msg);
+
     }
 
     @Override
