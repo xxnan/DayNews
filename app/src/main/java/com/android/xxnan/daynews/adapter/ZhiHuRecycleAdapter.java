@@ -29,6 +29,11 @@ public class ZhiHuRecycleAdapter extends RecyclerView.Adapter<MyHolder> {
 
 
 
+    public void setData( ArrayList<ZhiHuStories> zhiHuStories)
+    {
+        mZhiHuStories=zhiHuStories;
+        notifyDataSetChanged();
+    }
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyHolder(LayoutInflater.from(mContext).inflate(R.layout.zhihu_recycle_item, null));
