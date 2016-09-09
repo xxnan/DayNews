@@ -5,18 +5,20 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.android.xxnan.daynews.adapter.MeunAdapter;
 import com.android.xxnan.daynews.bean.zhihu.MenuBean;
+import com.android.xxnan.daynews.fragment.BaseFragment;
+import com.android.xxnan.daynews.fragment.ZhiHuFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BaseFragment.IUpdateView{
     @InjectView(R.id.left_listview)
     ListView left_listview;
     @InjectView(R.id.drawerLayout)
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String WANGYI = "网易头条";
     private static final String LOOKLOOK = "每日看看";
 //    @InjectView(R.id.zhihufragment)
-    View zhiHuFragment;
+    ZhiHuFragment zhiHuFragment;
 
 
     @Override
@@ -54,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initMuneData();
 
-//        FragmentManager fragmetManager = getSupportFragmentManager();
-//        fragmetManager.beginTransaction().add(R.id.content, zhiHuFragment).commit();
+        FragmentManager fragmetManager = getSupportFragmentManager();
+        fragmetManager.beginTransaction().add(R.id.content, zhiHuFragment).commit();
 
     }
 
@@ -86,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         left_listview.setAdapter(meunAdapter);
-        zhiHuFragment=content.findViewById(R.id.zhihufragment);
+//        zhiHuFragment=(ZhiHuFragment)contentfindViewById(R.id.zhihufragment);
+        zhiHuFragment=new ZhiHuFragment();
+        zhiHuFragment.setiUpdateView(this);
 
 
     }
@@ -136,9 +140,5 @@ public class MainActivity extends AppCompatActivity {
 
     public void showError(String error) {
         snackbar = Snackbar.make(content, error, Snackbar.LENGTH_SHORT);
-    }
-    public void test()
-    {
-
     }
 }

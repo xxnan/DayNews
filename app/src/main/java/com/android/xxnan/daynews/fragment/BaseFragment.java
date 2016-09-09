@@ -1,11 +1,15 @@
 package com.android.xxnan.daynews.fragment;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.android.xxnan.daynews.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +31,16 @@ public class BaseFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         return null;
+    }
+
+    public interface IUpdateView
+    {
+        public void showProgress();
+
+
+        public void hideProgress();
+
+        public void showError(String error);
     }
 
 }
