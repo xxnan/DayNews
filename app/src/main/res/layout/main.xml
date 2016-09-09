@@ -20,10 +20,16 @@
             />
 
     </android.support.design.widget.AppBarLayout>
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:layout_below="@+id/bar_layout"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        />-->
+    <fragment
+        android:id="@+id/zhihufragment"
+        android:name="com.android.xxnan.daynews.fragment.ZhiHuFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bar_layout"/>
 </RelativeLayout>

@@ -19,6 +19,11 @@ import java.util.List;
 public class MeunAdapter extends BaseAdapter {
     private List<MenuBean> mList;
     private Context mContext;
+    private MuenClickInterface muenClickInterface;
+
+    public void setMuenClickInterface(MuenClickInterface mMuenClickInterface) {
+        this.muenClickInterface = mMuenClickInterface;
+    }
 
     public MeunAdapter(Context context, List<MenuBean> list) {
         mContext = context;
@@ -41,7 +46,7 @@ public class MeunAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         MuneHolder muneHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.mune_item, null);
@@ -53,6 +58,12 @@ public class MeunAdapter extends BaseAdapter {
             muneHolder = (MuneHolder) convertView.getTag();
         }
         muneHolder.mune_title.setText(mList.get(position).getTitle());
+        muneHolder.mune_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                muenClickInterface.muneClick(mList.get(position).getTitle());
+            }
+        });
         muneHolder.icon.setBackgroundResource(mList.get(position).getIconId());
         return convertView;
     }
@@ -60,5 +71,9 @@ public class MeunAdapter extends BaseAdapter {
     class MuneHolder {
         TextView mune_title;
         ImageView icon;
+    }
+    public interface MuenClickInterface
+    {
+        void muneClick(String title);
     }
 }

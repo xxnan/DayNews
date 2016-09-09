@@ -2,7 +2,7 @@ package com.android.xxnan.daynews.implpersenter;
 
 import android.content.Context;
 
-import com.android.xxnan.daynews.IActivity.IZhiHuActivity;
+import com.android.xxnan.daynews.IFragment.IZhiHuFragment;
 import com.android.xxnan.daynews.bean.zhihu.ZhiHuBean;
 import com.android.xxnan.daynews.persenter.IZhiHuPersenter;
 import com.android.xxnan.daynews.utils.OkManagerUtil;
@@ -12,11 +12,11 @@ import com.google.gson.Gson;
  * Created by xxnan on 2016/9/5.
  */
 public class ImplZhiHuPersenter extends BasePersenter implements IZhiHuPersenter {
-    private IZhiHuActivity iZhiHuActivity;
+    private IZhiHuFragment iZhiHuFragment;
     private Context context;
-    public ImplZhiHuPersenter(Context mContext, IZhiHuActivity mIZhiHuActivity) {
+    public ImplZhiHuPersenter(Context mContext, IZhiHuFragment mIZhiHuFragment) {
         context = mContext;
-        iZhiHuActivity = mIZhiHuActivity;
+        iZhiHuFragment = mIZhiHuFragment;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ImplZhiHuPersenter extends BasePersenter implements IZhiHuPersenter
 
     @Override
     public void getLastZhihuNews() {
-        iZhiHuActivity.showProgressDialog();
+        iZhiHuFragment.showProgressDialog();
       /*  ZhiHuApi zhiHuApi=ApiManage.getInstence().getZhihuApiService();
         Call<String> call= zhiHuApi.getZhiHuDays();
         call.enqueue(new Callback<String>() {
@@ -48,8 +48,8 @@ public class ImplZhiHuPersenter extends BasePersenter implements IZhiHuPersenter
             public void dataBack(final String data) {
                 Gson gson = new Gson();
                 ZhiHuBean bean = gson.fromJson(data, ZhiHuBean.class);
-                iZhiHuActivity.updateList(bean);
-                iZhiHuActivity.hideProgressDialog();
+                iZhiHuFragment.updateList(bean);
+                iZhiHuFragment.hideProgressDialog();
             }
         });
     }
