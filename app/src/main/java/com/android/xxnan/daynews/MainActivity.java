@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
             intent.setClass(MainActivity.this, MainActivity.class);
         } else if (title.equals(WANGYI)) {
             fragmetManager.beginTransaction().replace(R.id.content, wangYiFragment).commit();
+            drawerLayout.closeDrawer(Gravity.LEFT);
         } else if (title.equals(LOOKLOOK)) {
 
         }

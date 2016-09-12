@@ -8,7 +8,7 @@ import com.android.xxnan.daynews.bean.zhihu.wangyi.WangYiNewsList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public interface IWngYiFragment extends IBaseFragment{
+public interface IWangYiFragment extends IBaseFragment{
     void upDateNews(WangYiNewsList newsList);
 
 }

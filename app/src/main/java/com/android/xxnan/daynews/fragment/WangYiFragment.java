@@ -2,6 +2,8 @@ package com.android.xxnan.daynews.fragment;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.xxnan.daynews.IFragment.IWngYiFragment;
+import com.android.xxnan.daynews.IFragment.IWangYiFragment;
 import com.android.xxnan.daynews.R;
 import com.android.xxnan.daynews.adapter.WangYiRecycleAdapter;
 import com.android.xxnan.daynews.bean.zhihu.wangyi.WangYiBean;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WangYiFragment extends BaseFragment implements IWngYiFragment {
+public class WangYiFragment extends BaseFragment implements IWangYiFragment {
 
 
     private RecyclerView newsRecyclerView;
@@ -32,7 +34,16 @@ public class WangYiFragment extends BaseFragment implements IWngYiFragment {
     public void setiUpdateView(IUpdateView iUpdateView) {
         this.iUpdateView = iUpdateView;
     }
-
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.arg1 == 0x111) {
+                list = (ArrayList<WangYiBean>) msg.obj;
+                wangYiRecycleAdapter.setList(list);
+            }
+        }
+    };
     public WangYiFragment() {
         // Required empty public constructor
     }
@@ -69,6 +80,9 @@ public class WangYiFragment extends BaseFragment implements IWngYiFragment {
     @Override
     public void upDateNews(WangYiNewsList newsList) {
         list=newsList.getNewsList();
-        wangYiRecycleAdapter.setList(list);
+        Message msg = handler.obtainMessage();
+        msg.arg1 = 0x111;
+        msg.obj = list;
+        handler.sendMessage(msg);
     }
 }
