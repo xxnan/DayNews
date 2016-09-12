@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.android.xxnan.daynews.adapter.MeunAdapter;
 import com.android.xxnan.daynews.bean.zhihu.MenuBean;
 import com.android.xxnan.daynews.fragment.BaseFragment;
+import com.android.xxnan.daynews.fragment.WangYiFragment;
 import com.android.xxnan.daynews.fragment.ZhiHuFragment;
 
 import java.util.ArrayList;
@@ -43,7 +44,9 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
     private static final String WANGYI = "网易头条";
     private static final String LOOKLOOK = "每日看看";
 //    @InjectView(R.id.zhihufragment)
-    ZhiHuFragment zhiHuFragment;
+    private ZhiHuFragment zhiHuFragment;
+    private WangYiFragment wangYiFragment;
+    private FragmentManager fragmetManager;
 
 
     @Override
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         initView();
         initMuneData();
 
-        FragmentManager fragmetManager = getSupportFragmentManager();
+        fragmetManager = getSupportFragmentManager();
         fragmetManager.beginTransaction().add(R.id.content, zhiHuFragment).commit();
 
     }
@@ -91,7 +94,8 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
 //        zhiHuFragment=(ZhiHuFragment)contentfindViewById(R.id.zhihufragment);
         zhiHuFragment=new ZhiHuFragment();
         zhiHuFragment.setiUpdateView(this);
-
+        wangYiFragment=new WangYiFragment();
+        wangYiFragment.setiUpdateView(this);
 
     }
 
@@ -100,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         if (title.equals(ZHIHU)) {
             intent.setClass(MainActivity.this, MainActivity.class);
         } else if (title.equals(WANGYI)) {
-
+            fragmetManager.beginTransaction().replace(R.id.content, wangYiFragment).commit();
         } else if (title.equals(LOOKLOOK)) {
 
         }

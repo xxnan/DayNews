@@ -3,6 +3,8 @@ package com.android.xxnan.daynews.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,7 +19,18 @@ import com.android.xxnan.daynews.MainActivity;
  * create an instance of this fragment.
  */
 public class BaseFragment extends Fragment {
-
+    public static final int ZHIHU_MSG=0x110;
+    public static final int WANGYI_MSG=0x111;
+    public static final int DAYLOOK_MSG=0x112;
+    public Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
+    public BaseFragment() {
+        // Required empty public constructor
+    }
 
 
     @Override

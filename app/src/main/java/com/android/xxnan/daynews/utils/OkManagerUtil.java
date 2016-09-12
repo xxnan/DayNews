@@ -31,15 +31,21 @@ public class OkManagerUtil {
         return instance;
     }
 
-    public OkHttpClient getOkHttpClient()
-    {
+    public OkHttpClient getOkHttpClient() {
         return okHttpClient;
     }
+
     private OkManagerUtil() {
         if (okHttpClient == null)
             okHttpClient = new OkHttpClient();
     }
 
+    /**
+     * 加载图片
+     *
+     * @param path
+     * @param iBitmapBack
+     */
     public void loadBitmap(String path, final IBitmapBack iBitmapBack) {
 
         Request request = new Request.Builder()
@@ -63,6 +69,12 @@ public class OkManagerUtil {
         });
     }
 
+    /**
+     * 加载知乎数据
+     *
+     * @param path
+     * @param iDataBack
+     */
     public void loaddata(String path, final IDataBack iDataBack) {
 
         Request request = new Request.Builder()
@@ -78,16 +90,46 @@ public class OkManagerUtil {
             @Override
             public void onResponse(Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    String data=response.body().string();
+                    String data = response.body().string();
                     iDataBack.dataBack(data);
                 }
             }
         });
     }
+
     public interface IDataBack {
         void dataBack(String data);
     }
+
     public interface IBitmapBack {
         void bitmapBack(Bitmap bitmap);
     }
+
+    /**
+     * 加载网易新闻数据
+     *
+     * @param path
+     */
+    public void loadNewsData(String path,final IDataBack iDataBack) {
+        Request request = new Request.Builder()
+                .url(path)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String data = response.body().string();
+                    System.out.print(data);
+                    iDataBack.dataBack(data);
+                }
+            }
+        });
+    }
+
 }
