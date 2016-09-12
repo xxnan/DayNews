@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/zhihu_item_layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/item_margin"
-    android:paddingTop="@dimen/item_margin"
     >
 
     <ImageView
@@ -20,17 +16,15 @@
       />
 
     <LinearLayout
+        android:layout_toRightOf="@+id/item_image_news"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/image_hight"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/item_text_news"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
 
             android:textSize="@dimen/text_size"/>
@@ -38,14 +32,15 @@
         <TextView
             android:id="@+id/item_text_source_news"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="bottom|right"
-            android:layout_marginBottom="7dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:text="helooeddd"
             android:textSize="10sp"/>
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

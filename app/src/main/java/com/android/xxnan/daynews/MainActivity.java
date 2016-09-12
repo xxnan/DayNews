@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
             }
         });
         left_listview.setAdapter(meunAdapter);
-//        zhiHuFragment=(ZhiHuFragment)contentfindViewById(R.id.zhihufragment);
         zhiHuFragment=new ZhiHuFragment();
         zhiHuFragment.setiUpdateView(this);
         wangYiFragment=new WangYiFragment();
@@ -102,7 +101,8 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
     private void meunClick(String title) {
         Intent intent = new Intent();
         if (title.equals(ZHIHU)) {
-            intent.setClass(MainActivity.this, MainActivity.class);
+            fragmetManager.beginTransaction().replace(R.id.content, zhiHuFragment).commit();
+            drawerLayout.closeDrawer(Gravity.LEFT);
         } else if (title.equals(WANGYI)) {
             fragmetManager.beginTransaction().replace(R.id.content, wangYiFragment).commit();
             drawerLayout.closeDrawer(Gravity.LEFT);
