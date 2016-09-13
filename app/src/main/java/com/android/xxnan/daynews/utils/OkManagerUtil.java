@@ -40,6 +40,7 @@ public class OkManagerUtil {
             okHttpClient = new OkHttpClient();
     }
 
+
     /**
      * 加载图片
      *
