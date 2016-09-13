@@ -16,10 +16,14 @@
     <dimen name="display_4_text_size">112sp</dimen>
     <dimen name="divider_height">1px</dimen>
     <dimen name="dialog_corners">2dp</dimen>
-    <dimen name="padding_room_for_fab">88dp</dimen> <!-- padding_normal + fab_size + padding_normal -->
-    <dimen name="fab_plus_single_padding">72dp</dimen> <!-- fab_size + padding_normal -->
-    <dimen name="half_fab_plus_single_padding">44dp</dimen> <!-- (fab_size / 2) + padding_normal -->
-    <dimen name="drag_dismiss_distance">112dp</dimen> <!-- 2 * ?android:actionBarSize -->
+    <dimen name="padding_room_for_fab">88dp</dimen>
+    <!-- padding_normal + fab_size + padding_normal -->
+    <dimen name="fab_plus_single_padding">72dp</dimen>
+    <!-- fab_size + padding_normal -->
+    <dimen name="half_fab_plus_single_padding">44dp</dimen>
+    <!-- (fab_size / 2) + padding_normal -->
+    <dimen name="drag_dismiss_distance">112dp</dimen>
+    <!-- 2 * ?android:actionBarSize -->
     <!-- text input layout seems to add 4dp of extra padding. The following account for this -->
     <dimen name="padding_normal_til">12dp</dimen>
     <dimen name="til_margin_fix">-4dp</dimen>
@@ -34,7 +38,8 @@
 
     <!-- grid -->
     <integer name="num_columns">2</integer>
-    <dimen name="grid_icon_with_padding">40dp</dimen> <!-- 24dp icon + 2 * @dimen/spacing_normal -->
+    <dimen name="grid_icon_with_padding">40dp</dimen>
+    <!-- 24dp icon + 2 * @dimen/spacing_normal -->
 
     <!-- designer news story -->
     <dimen name="extended_height_toolbar">128dp</dimen>
@@ -51,20 +56,27 @@
     <dimen name="designer_news_story_comments_vertical_padding">0dp</dimen>
 
     <!-- dribbble shot -->
-    <dimen name="shot_collapsed_app_bar_height">168dp</dimen> <!-- 3 * ?android:actionBarSize -->
+    <dimen name="shot_collapsed_app_bar_height">168dp</dimen>
+    <!-- 3 * ?android:actionBarSize -->
     <!-- avatar should be a 40dp asset in a 48dp touch target & optically aligned with standard padding -->
     <dimen name="avatar_size">40dp</dimen>
     <dimen name="avatar_bounds">48dp</dimen>
-    <dimen name="avatar_padding">4dp</dimen> <!-- (avatar_bounds - avatar_size) / 2 -->
-    <dimen name="avatar_margin">12dp</dimen> <!-- padding_normal - avatar_padding -->
-    <dimen name="avatar_ripple_radius">20dp</dimen> <!-- avatar_size / 2 -->
+    <dimen name="avatar_padding">4dp</dimen>
+    <!-- (avatar_bounds - avatar_size) / 2 -->
+    <dimen name="avatar_margin">12dp</dimen>
+    <!-- padding_normal - avatar_padding -->
+    <dimen name="avatar_ripple_radius">20dp</dimen>
+    <!-- avatar_size / 2 -->
     <dimen name="comment_actions_height">40dp</dimen>
     <dimen name="comment_like_margin_adjustment">-8dp</dimen>
 
     <!-- dribbble player -->
-    <dimen name="large_avatar_size">120dp</dimen> <!-- 2 * actionBarSize - 2 * avatar_padding -->
-    <dimen name="large_avatar_margin">28dp</dimen> <!-- spacing_large - avatar_padding -->
-    <dimen name="large_avatar_height">160dp</dimen> <!-- large_avatar_margin + large_avatar_size + avatar_margin -->
+    <dimen name="large_avatar_size">120dp</dimen>
+    <!-- 2 * actionBarSize - 2 * avatar_padding -->
+    <dimen name="large_avatar_margin">28dp</dimen>
+    <!-- spacing_large - avatar_padding -->
+    <dimen name="large_avatar_height">160dp</dimen>
+    <!-- large_avatar_margin + large_avatar_size + avatar_margin -->
 
     <!-- bottom sheet -->
     <dimen name="bottom_sheet_width">@dimen/match_parent</dimen>
@@ -95,12 +107,12 @@
     <dimen name="image_left_margin">2dp</dimen>
 
 
-
     <dimen name="item_margin">1dp</dimen>
     <dimen name="item_padding">0.2dp</dimen>
 
 
     <dimen name="text_size">14sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>
 
