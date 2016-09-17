@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
             if(msg.what==DEAFULT_MSG)
             {
                 viewPager.setCurrentItem(msg.arg1);
+                handler.postDelayed(new titleRunable(),5000);
             }
         }
     };
@@ -116,7 +117,8 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+//                viewPager.setCurrentItem(position);
+//                index=position;
             }
 
             @Override
@@ -130,28 +132,12 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
             }
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    Message ms = handler.obtainMessage();
-//                    index = viewPager.getCurrentItem();
-                    ms.what = DEAFULT_MSG;
-                    ms.arg1 = index++ % pageCount;
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    handler.sendMessageDelayed(ms, 1000);
-                }
-            }
-        }).start();
+        handler.postDelayed(new titleRunable(),5000);
+
     }
 
+
     private void initView() {
-
-
         left_listview = (ListView) findViewById(R.id.left_listview);
         MeunAdapter meunAdapter = new MeunAdapter(MainActivity.this, muenlist);
         meunAdapter.setMuenClickInterface(new MeunAdapter.MuenClickInterface() {
@@ -215,5 +201,17 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
 
     public void showError(String error) {
         snackbar = Snackbar.make(content, error, Snackbar.LENGTH_SHORT);
+    }
+
+    class titleRunable implements Runnable {
+
+        @Override
+        public void run() {
+            Message ms = handler.obtainMessage();
+//                    index = viewPager.getCurrentItem();
+            ms.what = DEAFULT_MSG;
+            ms.arg1 = index++ % pageCount;
+            handler.sendMessage(ms);
+        }
     }
 }
