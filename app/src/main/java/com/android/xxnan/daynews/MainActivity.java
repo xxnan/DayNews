@@ -4,6 +4,8 @@ package com.android.xxnan.daynews;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -53,7 +55,19 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
     private ZhiHuFragment zhiHuFragment;
     private WangYiFragment wangYiFragment;
     private FragmentManager fragmetManager;
-    private List<View> pageViews = new ArrayList<>(3);
+    private final int pageCount=3;
+    private final int DEAFULT_MSG=0X110;
+    private List<View> pageViews = new ArrayList<>(pageCount);
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==DEAFULT_MSG)
+            {
+                viewPager.setCurrentItem(msg.arg1);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +129,16 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
 
             }
         });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message ms=handler.obtainMessage();
+                int index=viewPager.getCurrentItem();
+                ms.what=DEAFULT_MSG;
+                ms.arg1=index++%pageCount;
+                handler.sendMessageDelayed(ms,1000);
+            }
+        }).start();
     }
 
     private void initView() {
