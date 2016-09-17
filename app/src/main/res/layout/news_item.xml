@@ -19,6 +19,7 @@
         android:layout_toRightOf="@+id/item_image_news"
         android:layout_width="match_parent"
         android:layout_height="@dimen/image_hight"
+        android:background="@drawable/list_item_select"
         android:orientation="vertical">
 
         <TextView

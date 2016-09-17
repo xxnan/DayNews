@@ -17,5 +17,6 @@
         android:id="@+id/item_zhihu_title"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="@drawable/list_item_select"
         android:layout_toRightOf="@+id/item_zhihu_imageview"/>
 </RelativeLayout>

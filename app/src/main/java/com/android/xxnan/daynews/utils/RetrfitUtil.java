@@ -31,7 +31,7 @@ public class RetrfitUtil {
     public void LoadZhiHuData(String basePath)
     {
         Retrofit retrofit=new Retrofit.Builder().baseUrl(basePath)
-                .addConverterFactory(ScalarsConverterFactory.create())
+//                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
