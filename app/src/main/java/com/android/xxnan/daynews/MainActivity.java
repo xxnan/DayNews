@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
     LinearLayout content;
     @InjectView(R.id.viewpager)
     ViewPager viewPager;
+    @InjectView(R.id.title_dian)
+    LinearLayout title_dian;
     private ProgressDialog progressDialog;
     private Snackbar snackbar;
 
@@ -55,17 +57,19 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
     private ZhiHuFragment zhiHuFragment;
     private WangYiFragment wangYiFragment;
     private FragmentManager fragmetManager;
-    private final int pageCount=3;
-    private final int DEAFULT_MSG=0X110;
+    private final int pageCount = 3;
+    private final int DEAFULT_MSG = 0X110;
+    private final int DEALY_TIME = 5000;//viewpager延时间隔
     private List<View> pageViews = new ArrayList<>(pageCount);
-    private Handler handler=new Handler(){
+    private List<View> titleDians = new ArrayList<>(pageCount);
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if(msg.what==DEAFULT_MSG)
-            {
+            if (msg.what == DEAFULT_MSG) {
                 viewPager.setCurrentItem(msg.arg1);
-                handler.postDelayed(new titleRunable(),5000);
+                setDianBg(msg.arg1);
+                handler.postDelayed(new titleRunable(), DEALY_TIME);
             }
         }
     };
@@ -78,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         setSupportActionBar(toolbar);
         ButterKnife.inject(this);
         initView();
+        inittitlepageview();
         initMuneData();
         initPageData();
         fragmetManager = getSupportFragmentManager();
@@ -85,6 +90,36 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
 
     }
 
+    /**
+     * 初始化viewpager下方循环点
+     */
+    private void inittitlepageview() {
+        for (int i = 0; i < pageCount; i++) {
+            ImageView imageView = new ImageView(this);
+            imageView.setBackgroundResource(R.drawable.dian_gry);
+            titleDians.add(i, imageView);
+            title_dian.addView(imageView);
+        }
+
+    }
+
+    /**
+     * 设置点的背景颜色
+     *
+     * @param i
+     */
+    private void setDianBg(int i) {
+        for (int i1 = 0; i1 < titleDians.size(); i1++) {
+            if (i1 == i)
+                titleDians.get(i1).setBackgroundResource(R.drawable.dian_white);
+            else
+                titleDians.get(i1).setBackgroundResource(R.drawable.dian_gry);
+        }
+    }
+
+    /**
+     * 初始化菜单数据
+     */
     private void initMuneData() {
         MenuBean menuBean = new MenuBean();
         menuBean.setIconId(R.drawable.zhihu);
@@ -101,15 +136,17 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         menuBean.setTitle(LOOKLOOK);
         muenlist.add(menuBean);
     }
-    int index=0;
+
+    int index = 0;
+
     private void initPageData() {
-        ImageView imageView1= (ImageView) LayoutInflater.from(MainActivity.this).inflate(R.layout.page_item,null);
+        ImageView imageView1 = (ImageView) LayoutInflater.from(MainActivity.this).inflate(R.layout.page_item, null);
         imageView1.setBackgroundResource(R.drawable.title_1);
         pageViews.add(imageView1);
-        ImageView imageView2= (ImageView) LayoutInflater.from(MainActivity.this).inflate(R.layout.page_item,null);
+        ImageView imageView2 = (ImageView) LayoutInflater.from(MainActivity.this).inflate(R.layout.page_item, null);
         imageView2.setBackgroundResource(R.drawable.title_2);
         pageViews.add(imageView2);
-        ImageView imageView3= (ImageView) LayoutInflater.from(MainActivity.this).inflate(R.layout.page_item,null);
+        ImageView imageView3 = (ImageView) LayoutInflater.from(MainActivity.this).inflate(R.layout.page_item, null);
         imageView3.setBackgroundResource(R.drawable.title_3);
         pageViews.add(imageView3);
         viewPager.setAdapter(new MyPageAdapter(pageViews));
@@ -131,9 +168,9 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
 
             }
         });
-
-        handler.postDelayed(new titleRunable(),5000);
-
+        //初始化点的背景颜色
+        setDianBg(index);
+        handler.postDelayed(new titleRunable(), DEALY_TIME);
     }
 
 
@@ -154,6 +191,10 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
 
     }
 
+    /**
+     * 菜单点击事件
+     * @param title
+     */
     private void meunClick(String title) {
         Intent intent = new Intent();
         if (title.equals(ZHIHU)) {
@@ -186,29 +227,38 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     * 显示进度条
+     */
     public void showProgress() {
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("正在加载...");
         progressDialog.show();
     }
 
-
+    /**
+     * 隐藏进度条
+     */
     public void hideProgress() {
         progressDialog.dismiss();
     }
 
-
+    /**
+     * 显示错误信息
+     * @param error
+     */
     public void showError(String error) {
         snackbar = Snackbar.make(content, error, Snackbar.LENGTH_SHORT);
     }
 
+    /**
+     * page循环的runnable
+     */
     class titleRunable implements Runnable {
 
         @Override
         public void run() {
             Message ms = handler.obtainMessage();
-//                    index = viewPager.getCurrentItem();
             ms.what = DEAFULT_MSG;
             ms.arg1 = index++ % pageCount;
             handler.sendMessage(ms);
