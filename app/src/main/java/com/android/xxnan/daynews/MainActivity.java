@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         menuBean.setTitle(LOOKLOOK);
         muenlist.add(menuBean);
     }
-
+    int index=0;
     private void initPageData() {
         ImageView imageView1= (ImageView) LayoutInflater.from(MainActivity.this).inflate(R.layout.page_item,null);
         imageView1.setBackgroundResource(R.drawable.title_1);
@@ -129,14 +129,22 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
 
             }
         });
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Message ms=handler.obtainMessage();
-                int index=viewPager.getCurrentItem();
-                ms.what=DEAFULT_MSG;
-                ms.arg1=index++%pageCount;
-                handler.sendMessageDelayed(ms,1000);
+                while(true) {
+                    Message ms = handler.obtainMessage();
+//                    index = viewPager.getCurrentItem();
+                    ms.what = DEAFULT_MSG;
+                    ms.arg1 = index++ % pageCount;
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    handler.sendMessageDelayed(ms, 1000);
+                }
             }
         }).start();
     }
