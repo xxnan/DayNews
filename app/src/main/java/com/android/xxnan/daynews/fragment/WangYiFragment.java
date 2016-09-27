@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,17 +24,21 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WangYiFragment extends BaseFragment implements IWangYiFragment {
+public class WangYiFragment extends BaseFragment implements IWangYiFragment, SwipeRefreshLayout.OnRefreshListener {
 
 
     private RecyclerView newsRecyclerView;
     private ImplWangYiPersenter implWangYiPersenter;
     private IUpdateView iUpdateView;
     private WangYiRecycleAdapter wangYiRecycleAdapter;
-    private ArrayList<WangYiBean> list =new ArrayList<>();
+    private SwipeRefreshLayout wangyi_SwipeRefreshLayout;
+    private ArrayList<WangYiBean> list = new ArrayList<>();
+    private int page = 0;
+
     public void setiUpdateView(IUpdateView iUpdateView) {
         this.iUpdateView = iUpdateView;
     }
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -44,6 +49,7 @@ public class WangYiFragment extends BaseFragment implements IWangYiFragment {
             }
         }
     };
+
     public WangYiFragment() {
         // Required empty public constructor
     }
@@ -52,12 +58,14 @@ public class WangYiFragment extends BaseFragment implements IWangYiFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_wng_yi, null);
+        wangyi_SwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.wangyi_SwipeRefreshLayout);
+        wangyi_SwipeRefreshLayout.setOnRefreshListener(this);
         newsRecyclerView = (RecyclerView) view.findViewById(R.id.news_recyclerView);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        wangYiRecycleAdapter=new WangYiRecycleAdapter(getActivity(),list);
+        wangYiRecycleAdapter = new WangYiRecycleAdapter(getActivity(), list);
         newsRecyclerView.setAdapter(wangYiRecycleAdapter);
         implWangYiPersenter = new ImplWangYiPersenter(getActivity(), this);
-        implWangYiPersenter.getNewsList(0);
+        implWangYiPersenter.getNewsList(page);
         return view;
     }
 
@@ -79,10 +87,17 @@ public class WangYiFragment extends BaseFragment implements IWangYiFragment {
 
     @Override
     public void upDateNews(WangYiNewsList newsList) {
-        list=newsList.getNewsList();
+        list = newsList.getNewsList();
         Message msg = handler.obtainMessage();
         msg.arg1 = 0x111;
         msg.obj = list;
         handler.sendMessage(msg);
+    }
+
+    @Override
+    public void onRefresh() {
+        page++;
+        implWangYiPersenter.getNewsList(page);
+        wangyi_SwipeRefreshLayout.setRefreshing(false);
     }
 }

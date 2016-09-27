@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ZhiHuFragment extends BaseFragment implements IZhiHuFragment{
+public class ZhiHuFragment extends BaseFragment implements IZhiHuFragment,SwipeRefreshLayout.OnRefreshListener{
 
 
     private RecyclerView recyclerView;
@@ -33,7 +34,7 @@ public class ZhiHuFragment extends BaseFragment implements IZhiHuFragment{
     private ZhiHuRecycleAdapter zhihuAdapter;
     private ImplZhiHuPersenter implZhiHuPersenter;
     private IUpdateView iUpdateView;
-
+    private SwipeRefreshLayout zhihu_SwipeRefreshLayout;
     public void setiUpdateView(IUpdateView iUpdateView) {
         this.iUpdateView = iUpdateView;
     }
@@ -57,6 +58,8 @@ public class ZhiHuFragment extends BaseFragment implements IZhiHuFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_zhi_hu, container, false);
+        zhihu_SwipeRefreshLayout= (SwipeRefreshLayout) view.findViewById(R.id.zhihu_SwipeRefreshLayout);
+        zhihu_SwipeRefreshLayout.setOnRefreshListener(this);
         recyclerView= (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -94,5 +97,11 @@ public class ZhiHuFragment extends BaseFragment implements IZhiHuFragment{
     public void showErrorMessage(String error) {
 //        getActivity().showError(error);
         iUpdateView.showError(error);
+    }
+
+    @Override
+    public void onRefresh() {
+        implZhiHuPersenter.getLastZhihuNews();
+        zhihu_SwipeRefreshLayout.setRefreshing(false);
     }
 }

@@ -58,8 +58,9 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
     private WangYiFragment wangYiFragment;
     private FragmentManager fragmetManager;
     private final int pageCount = 3;
+    private int currentPageIndex = 0;
     private final int DEAFULT_MSG = 0X110;
-    private final int DEALY_TIME = 5000;//viewpager延时间隔
+    private final int DEALY_TIME = 3000;//viewpager延时间隔
     private List<View> pageViews = new ArrayList<>(pageCount);
     private List<View> titleDians = new ArrayList<>(pageCount);
     private Handler handler = new Handler() {
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
             }
         }
     };
+    private titleRunable tRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         initPageData();
         fragmetManager = getSupportFragmentManager();
         fragmetManager.beginTransaction().add(R.id.content, zhiHuFragment).commit();
-
+        tRunnable = new titleRunable();
     }
 
     /**
@@ -137,8 +139,6 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         muenlist.add(menuBean);
     }
 
-    int index = 0;
-
     private void initPageData() {
         ImageView imageView1 = (ImageView) LayoutInflater.from(MainActivity.this).inflate(R.layout.page_item, null);
         imageView1.setBackgroundResource(R.drawable.title_1);
@@ -151,16 +151,17 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         pageViews.add(imageView3);
         viewPager.setAdapter(new MyPageAdapter(pageViews));
         viewPager.setOffscreenPageLimit(1);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                viewPager.setCurrentItem(position);
-//                index=position;
+
             }
 
             @Override
             public void onPageSelected(int position) {
-
+                handler.removeCallbacks(tRunnable);
+                currentPageIndex = position;
+                handler.postDelayed(tRunnable, DEALY_TIME);
             }
 
             @Override
@@ -169,8 +170,8 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
             }
         });
         //初始化点的背景颜色
-        setDianBg(index);
-        handler.postDelayed(new titleRunable(), DEALY_TIME);
+        setDianBg(currentPageIndex);
+        handler.postDelayed(tRunnable, DEALY_TIME);
     }
 
 
@@ -193,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
 
     /**
      * 菜单点击事件
+     *
      * @param title
      */
     private void meunClick(String title) {
@@ -245,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
 
     /**
      * 显示错误信息
+     *
      * @param error
      */
     public void showError(String error) {
@@ -260,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         public void run() {
             Message ms = handler.obtainMessage();
             ms.what = DEAFULT_MSG;
-            ms.arg1 = index++ % pageCount;
+            ms.arg1 = currentPageIndex++ % pageCount;
             handler.sendMessage(ms);
         }
     }
