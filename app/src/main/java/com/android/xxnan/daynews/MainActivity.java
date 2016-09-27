@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
             public void onPageSelected(int position) {
                 handler.removeCallbacks(tRunnable);
                 currentPageIndex = position;
+                setDianBg(currentPageIndex);
                 handler.postDelayed(tRunnable, DEALY_TIME);
             }
 
@@ -263,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.IUpd
         public void run() {
             Message ms = handler.obtainMessage();
             ms.what = DEAFULT_MSG;
-            ms.arg1 = currentPageIndex++ % pageCount;
+            ms.arg1 = (currentPageIndex++) % pageCount;
             handler.sendMessage(ms);
         }
     }
